@@ -15,17 +15,15 @@
 </head>
 <th:block layout:fragment="content-full-screen">
     <div class="col-sm-12">
-        <div class="card">
-            <div class="card-header" style="display: flex; justify-content: right">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a th:href="@{/main}">Головна</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Контакти</li>
-                    </ol>
-                </nav>
-            </div>
-            <div class="card-body px-0">
-            </div>
+        <div class="card-header" style="display: flex; justify-content: right;margin-right: 50px">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/main}">Головна</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Контакти</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="card-body px-0">
         </div>
     </div>
     <div id="map" style="width: 100%; margin-bottom: 50px">
@@ -36,6 +34,10 @@
         <h2 id="title"></h2>
         <hr class="hr-horizontal">
         <div id="description" style="max-width: 100%; word-wrap: break-word"></div>
+        <div style="display: flex">
+            <b><i>Офіційний сайт компані - </i></b> <a id="link" target="_blank"></a>
+        </div>
+
     </div>
     <div class="col-sm-4">
         <h2>Контакти</h2>
@@ -75,6 +77,10 @@
                     number.href = "tel:"+response.number;
                     const email = document.getElementById("email");
                     email.href = "mailto:"+response.email;
+                    const link = document.getElementById("link");
+                    link.href = response.url;
+                    link.innerHTML = response.url;
+
                 })
         })
     </script>

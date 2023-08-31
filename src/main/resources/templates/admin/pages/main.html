@@ -46,6 +46,7 @@
         <h2 id="title"></h2>
         <hr class="hr-horizontal">
         <div id="description" style="max-width: 100%; word-wrap: break-word"></div>
+        <div id="link"><a target="_blank" rel="nofollow" href="https://myhouse24.avada-media.ua/">https://myhouse24.avada-media.ua/</a></div>
         <div style="display: flex; justify-content: space-between">
             <div >
                 <a th:href="@{/about}" class="btn btn-primary">Детальніше</a>
@@ -108,7 +109,12 @@
                             "            </div>\n" +
                             "        </div>"
                     }
-                    container.innerHTML = bannerHtml
+                    container.innerHTML = bannerHtml;
+                    if (!response.links){
+                        const container = document.getElementById("link");
+                        container.style.display = "none";
+                    }
+
                 })
 
             $.ajax({

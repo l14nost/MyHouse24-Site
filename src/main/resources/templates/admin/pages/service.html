@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/fragments/layout}">
+
+<head>
+    <title>About</title>
+    <th:block layout:fragment="extra-style">
+        <style>
+            .document-about-page{
+                width: 100px;
+                height: 100px;
+            }
+        </style>
+    </th:block>
+</head>
+<th:block layout:fragment="content-full-screen">
+    <div class="col-sm-12">
+            <div class="card-header" style="display: flex; justify-content: right; margin-right: 50px">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/main}">Головна</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Послуги</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="card-body px-0">
+            </div>
+    </div>
+    <div style="margin-bottom: 50px"></div>
+</th:block>
+<th:block layout:fragment="content">
+    <h2>Наши послуги</h2>
+    <hr class="hr-horizontal">
+    <div class="row" id="serviceContainer">
+    </div>
+    <div style="display: flex; justify-content: center; min-height: 45px; margin-top: 20px" id="tableInfo" >
+        <div style="display: flex" >
+            <nav aria-label="Page navigation example" id = "pagination">
+            </nav>
+        </div>
+    </div>
+</th:block>
+
+
+<th:block layout:fragment="extra-script">
+    <script>
+        $(document).ready(function (){
+            getAllHouse(0);
+
+        });
+        function changePage(page,event){
+            event.preventDefault();
+            getAllHouse(page);
+
+        }
+
+        function getAllHouse(page) {
+
+            $.ajax({
+                url: "/site/get-service",
+                data: {
+                    page: page
+                }
+            })
+                .done(
+                    function (response) {
+                        const pagination = document.getElementById("pagination");
+                        pagination.innerHTML = "";
+                        const table = document.getElementById("serviceContainer");
+                        table.innerHTML = "";
+                        if (response.content.length === 0) {
+                            const container1 = document.getElementById("tableInfo");
+                            container1.style.display = "none";
+                        } else {
+                            const container3 = document.getElementById("tableInfo");
+                            container3.style.display = "flex";
+                            $.each(response.content, function (index, entity) {
+                                const container = document.getElementById("serviceContainer");
+                                const newTr = document.createElement("div");
+                                newTr.classList.add("row")
+                                newTr.style.marginTop = "20px";
+                                newTr.innerHTML =
+                                    "            <div class=\"col-sm-7\">\n" +
+                                    "                <img src=\"/site/files/"+entity.image+"\" style=\"width: 100%; height: 300px\">\n" +
+                                    "            </div>\n" +
+                                    "            <div class=\"col-sm-5\">\n" +
+                                    "                <h4>"+entity.name+"</h4>\n" +
+                                    "                <hr class=\"hr-horizontal\">\n" +
+                                    "                <div>\n" +
+                                    entity.description +
+                                    "                </div>\n" +
+                                    "            </div>"
+                                container.appendChild(newTr);
+                            })
+
+                            if (response.totalPages >= 2 && response.totalPages<7) {
+                                let addElements = "  <li class=\"page-item  " + checkForDisabledPrev() + "\" " + checkForDisabledPrev() + "><a class=\"page-link\" href=\"#\" onclick='changePage("+(page-1)+','+'event'+")'>❮</a></li>\n";
+                                var containerPagination = document.getElementById("pagination");
+                                const newUl = document.createElement("ul");
+                                newUl.id = "apartmentPaginationList";
+                                newUl.classList.add("pagination");
+                                for (var i = 0; i < response.totalPages; i++) {
+                                    var currentNum = i + 1;
+
+                                    addElements += "<li class=\"page-item " + checkCurrentPage(currentNum) + "\"><a class=\"page-link \" href=\"#\" onclick='changePage("+i+','+'event'+")'>" + currentNum + "</a></li>\n"
+                                }
+                                addElements += "  <li class=\"page-item " + checkForDisabledNext() + " \" ><a class=\"page-link\" href=\"#\" onclick='changePage("+(page+1)+','+'event'+")'>❯</a></li>\n"
+                                newUl.innerHTML = addElements
+                                containerPagination.appendChild(newUl);
+                            }
+                            else if (response.totalPages>=7) {
+                                let addElements = "  <li class=\"page-item  " + checkForDisabledPrev() + "\" " + checkForDisabledPrev() + "><a class=\"page-link\" href=\"#\" onclick='changePage("+(page-1)+','+'event'+")'>❮</a></li>\n";
+                                var containerPagination = document.getElementById("pagination");
+                                const newUl = document.createElement("ul");
+                                newUl.id = "apartmentPaginationList";
+                                newUl.classList.add("pagination");
+                                addElements+="<li class=\"page-item " + checkCurrentPage(1) + "\"><a class=\"page-link \" href=\"#\" onclick='changePage(0,"+'event'+")'> 1 </a></li>\n"
+                                if (page-2<0){
+                                    addElements+="<li class=\"page-item " + checkCurrentPage(2) + "\"><a class=\"page-link \" href=\"#\" onclick='changePage(1,"+'event'+")'> 2 </a></li>\n"
+                                    addElements+="<li class=\"page-item " + checkCurrentPage(3) + "\"><a class=\"page-link \" href=\"#\" onclick='changePage(2,"+'event'+")'> 3 </a></li>\n"
+                                }
+                                if(page-2>0) {
+                                    addElements += "<li class=\"page-item disabled\" ><a class=\"page-link \" href=\"#\">...</a></li>\n"
+                                }
+                                if (page-2>=0 && page+3<=response.totalPages){
+                                    addElements+="<li class=\"page-item " + checkCurrentPage(page) + "\"><a class=\"page-link \" href=\"#\" onclick='changePage("+(page-1) +','+'event'+")'> "+(page) +" </a></li>\n"
+                                    addElements+="<li class=\"page-item " + checkCurrentPage(page+1) + "\"><a class=\"page-link \" href=\"#\" onclick='changePage("+(page) +','+'event'+")'> "+(page+1) +" </a></li>\n"
+                                    addElements+="<li class=\"page-item " + checkCurrentPage(page+2) + "\"><a class=\"page-link \" href=\"#\" onclick='changePage("+(page+1) +','+'event'+")'> "+(page+2) +" </a></li>\n"
+
+                                }
+
+                                if (page+3<response.totalPages) {
+                                    addElements += "<li class=\"page-item disabled\" ><a class=\"page-link \" href=\"#\"'>...</a></li>\n"
+                                }
+                                if (page+3>response.totalPages) {
+                                    addElements+="<li class=\"page-item " + checkCurrentPage(response.totalPages-2) + "\"><a class=\"page-link \" href=\"#\" onclick='changePage("+(response.totalPages - 3)+','+'event'+")'> "+ (response.totalPages-2) +" </a></li>\n"
+                                    addElements+="<li class=\"page-item " + checkCurrentPage(response.totalPages-1) + "\"><a class=\"page-link \" href=\"#\" onclick='changePage("+(response.totalPages - 2)+','+'event'+")'> "+ (response.totalPages-1) +" </a></li>\n"
+                                }
+
+                                addElements+="<li class=\"page-item " + checkCurrentPage(response.totalPages) + "\"><a class=\"page-link \" href=\"#\" onclick='changePage("+(response.totalPages - 1)+','+'event'+")'> "+ response.totalPages +" </a></li>\n"
+                                addElements += "  <li class=\"page-item " + checkForDisabledNext() + " \" ><a class=\"page-link\" href=\"#\" onclick='changePage("+(page+1)+','+'event'+")'>❯</a></li>\n"
+                                newUl.innerHTML = addElements
+                                containerPagination.appendChild(newUl);
+                            }
+
+
+                            function checkCurrentPage(currentNum) {
+                                if (currentNum - 1 === parseInt(page)) {
+                                    return "active";
+                                } else return "";
+                            }
+
+                            function checkForDisabledPrev() {
+                                if (parseInt(page) === 0) {
+                                    return "disabled";
+                                } else return "";
+                            }
+                            function checkForDisabledNext() {
+                                var currentNum = parseInt(page);
+                                if (currentNum+1 === response.totalPages) {
+                                    return "disabled";
+                                } else return "";
+                            }
+
+
+
+                        }
+
+
+                    }
+                )
+        }
+
+
+
+
+
+        // $(document).ready(function (){
+        //     $.ajax({
+        //         url: "/site/get-service",
+        //         data: {
+        //             page: 0
+        //         }
+        //     })
+        //         .done(function (response){
+        //             console.log(response);
+        //             // $("#title").text(response.title);
+        //             // $("#addTitle").text(response.addTitle);
+        //             // $("#description").html(response.description);
+        //             // $("#addDescription").html(response.addDescription);
+        //             // $("#directorImg").attr("src","/site/files/"+response.directorImg);
+        //             // let photo ="";
+        //             // for (let i = 0; i<response.photo.length; i++){
+        //             //     photo+="<div class=\"col-sm-4\">\n" +
+        //             //         "            <img src=\""+'/site/files/'+response.photo[i]+"\" style=\"height: 100%; width: 100%\">\n" +
+        //             //         "</div>"
+        //             // }
+        //             // $("#galleryContainer").html(photo);
+        //             // let addPhoto ="";
+        //             // for (let i = 0; i<response.addPhoto.length; i++){
+        //             //     addPhoto+="<div class=\"col-sm-4\">\n" +
+        //             //         "            <img src=\""+'/site/files/'+response.addPhoto[i]+"\" style=\"height: 100%; width: 100%\">\n" +
+        //             //         "</div>"
+        //             // }
+        //             // $("#addGalleryContainer").html(addPhoto);
+        //             // let document = "";
+        //             // for (let i = 0; i<response.documentResponses.length; i++){
+        //             //     document+="<div style=\"display: flex; align-items: center\">\n" +
+        //             //         "            <div>\n" +
+        //             //         "                <img src=\"/site/assets/images/document.png\" class=\"document-about-page\">\n" +
+        //             //         "            </div>\n" +
+        //             //         "            <div style=\"\">\n" +
+        //             //         "                <div>\n" +
+        //             //         "                    <h4>"+response.documentResponses[i].name+"</h4>\n" +
+        //             //         "                </div>\n" +
+        //             //         "                <div>\n" +
+        //             //         "                    <a href=\"/site/files/"+response.documentResponses[i].document+"\" download=\""+response.documentResponses[i].name+"\"><div style='display: flex; align-items: center'><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"1em\" viewBox=\"0 0 512 512\"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill='currentColor' d=\"M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z\"/></svg>Завантажити </div></a>\n" +
+        //             //         "                </div>\n" +
+        //             //         "            </div>\n" +
+        //             //         "        </div>";
+        //             // }
+        //             // $("#documentContainer").html(document);
+        //
+        //         })
+        // })
+    </script>
+
+
+</th:block>
+
+</html>

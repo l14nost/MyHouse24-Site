@@ -48,7 +48,24 @@
 <script th:src="@{/assets/js/plugins/prism.mini.js}"></script>
 
 
-
+<script>
+    window.addEventListener('load', function() {
+        var navLinks = document.querySelectorAll(".sidebar-active");
+        var pathAndQuery = window.location.pathname + window.location.search;
+        var pathSplit = pathAndQuery.split("/");
+        var chapter = pathSplit[2];
+        var ids = [];
+        for (var i = 0; i < navLinks.length; i++) {
+            ids.push(navLinks[i].id);
+        }
+        for (var i =0; i< ids.length; i++){
+            if (chapter.includes(ids[i])){
+                var targetLinks = document.getElementById(ids[i]);
+                targetLinks.classList.add("active");
+            }
+        }
+    });
+</script>
 
 
 
