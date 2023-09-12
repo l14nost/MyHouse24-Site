@@ -1,7 +1,6 @@
 package lab.space.my_house_24_site.model.main;
 
 import lab.space.my_house_24_site.model.banner.BannerResponse;
-import lab.space.my_house_24_site.model.seo.SeoResponse;
 import lombok.Builder;
 
 import java.util.List;

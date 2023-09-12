@@ -1,5 +1,6 @@
 package lab.space.my_house_24_site.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import lab.space.my_house_24_site.service.AboutService;
 import lab.space.my_house_24_site.service.MainPageService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,11 @@ public class MainPageController {
 
     @GetMapping("/get-main-page")
     public ResponseEntity getMainPage(){
-        return ResponseEntity.ok(mainPageService.findById());
+        try {
+            return ResponseEntity.ok(mainPageService.findById());
+        }
+        catch (EntityNotFoundException e){
+            return ResponseEntity.badRequest().body("Main page not found");
+        }
     }
 }

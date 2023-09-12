@@ -1,5 +1,6 @@
 package lab.space.my_house_24_site.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import lab.space.my_house_24_site.service.AboutService;
 import lab.space.my_house_24_site.service.impl.AboutServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,12 @@ public class AboutController {
 
     @GetMapping("/get-about")
     public ResponseEntity getAbout(){
-        return ResponseEntity.ok(aboutService.findById());
+        try {
+            return ResponseEntity.ok(aboutService.findById());
+        }
+        catch (EntityNotFoundException e){
+            return ResponseEntity.badRequest().body("About not found");
+        }
+
     }
 }

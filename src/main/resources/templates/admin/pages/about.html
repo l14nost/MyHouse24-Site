@@ -85,14 +85,14 @@
                     let photo ="";
                     for (let i = 0; i<response.photo.length; i++){
                         photo+="<div class=\"col-sm-4\">\n" +
-                            "            <img src=\""+'/site/files/'+response.photo[i]+"\" style=\"height: 100%; width: 100%\">\n" +
+                            "            <img src=\""+'/site/files/'+response.photo[i]+"\" style=\"height: 95%; width: 95%\">\n" +
                             "</div>"
                     }
                     $("#galleryContainer").html(photo);
                     let addPhoto ="";
                     for (let i = 0; i<response.addPhoto.length; i++){
                         addPhoto+="<div class=\"col-sm-4\">\n" +
-                            "            <img src=\""+'/site/files/'+response.addPhoto[i]+"\" style=\"height: 100%; width: 100%\">\n" +
+                            "            <img src=\""+'/site/files/'+response.addPhoto[i]+"\" style=\"height: 95%; width: 95%\">\n" +
                             "</div>"
                     }
                     $("#addGalleryContainer").html(addPhoto);

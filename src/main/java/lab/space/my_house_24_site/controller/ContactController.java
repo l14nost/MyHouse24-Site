@@ -1,5 +1,6 @@
 package lab.space.my_house_24_site.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import lab.space.my_house_24_site.service.ContactService;
 import lab.space.my_house_24_site.service.MainPageService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,13 @@ public class ContactController {
 
     @GetMapping("/get-contact")
     public ResponseEntity getContact(){
-        return ResponseEntity.ok(contactService.findById());
+        try {
+            return ResponseEntity.ok(contactService.findById());
+        }
+        catch (EntityNotFoundException e){
+            return ResponseEntity.badRequest().body("Contact not found");
+        }
+
     }
 }
 
