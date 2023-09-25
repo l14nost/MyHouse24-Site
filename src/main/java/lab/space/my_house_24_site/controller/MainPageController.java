@@ -7,14 +7,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequiredArgsConstructor
 public class MainPageController {
     private final MainPageService mainPageService;
     @GetMapping("/main")
-    public String mainPage(){
-        return "/admin/pages/main";
+    public ModelAndView mainPage(){
+        return new ModelAndView("admin/pages/main");
     }
 
     @GetMapping("/get-main-page")

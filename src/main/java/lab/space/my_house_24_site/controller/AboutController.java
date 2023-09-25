@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequiredArgsConstructor
@@ -14,8 +15,8 @@ public class AboutController {
     private final AboutService aboutService;
 
     @GetMapping("/about")
-    public String aboutPage(){
-        return "/admin/pages/about";
+    public ModelAndView aboutPage(){
+        return new ModelAndView("admin/pages/about");
     }
 
     @GetMapping("/get-about")
