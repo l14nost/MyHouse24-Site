@@ -23,7 +23,7 @@ public class MainPageController {
             return ResponseEntity.ok(mainPageService.findById());
         }
         catch (EntityNotFoundException e){
-            return ResponseEntity.badRequest().body("Main page not found");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

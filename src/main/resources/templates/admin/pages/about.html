@@ -115,6 +115,9 @@
                     $("#documentContainer").html(document);
 
                 })
+                .fail(function (){
+                    window.location.href = "/site/error"
+                })
         })
     </script>
 

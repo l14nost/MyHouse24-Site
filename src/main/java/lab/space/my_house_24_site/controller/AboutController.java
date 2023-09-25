@@ -24,7 +24,7 @@ public class AboutController {
             return ResponseEntity.ok(aboutService.findById());
         }
         catch (EntityNotFoundException e){
-            return ResponseEntity.badRequest().body("About not found");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
 
     }

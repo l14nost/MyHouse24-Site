@@ -60,6 +60,6 @@ class ContactControllerTest {
         when(contactService.findById()).thenThrow(new EntityNotFoundException());
         mockMvc.perform(get("/get-contact"))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string("Contact not found"));
+                .andExpect(content().string(""));
     }
 }

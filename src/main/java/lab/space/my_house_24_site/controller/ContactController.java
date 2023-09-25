@@ -24,7 +24,7 @@ public class ContactController {
             return ResponseEntity.ok(contactService.findById());
         }
         catch (EntityNotFoundException e){
-            return ResponseEntity.badRequest().body("Contact not found");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
 
     }

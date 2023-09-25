@@ -116,6 +116,9 @@
                     }
 
                 })
+                .fail(function (){
+                    window.location.href = "/site/error"
+                })
 
             $.ajax({
                 url: "/site/get-contact"
@@ -130,6 +133,9 @@
                     number.href = "tel:"+response.number;
                     const email = document.getElementById("email");
                     email.href = "mailto:"+response.email;
+                })
+                .fail(function (){
+                    window.location.href = "/site/error"
                 })
         })
     </script>

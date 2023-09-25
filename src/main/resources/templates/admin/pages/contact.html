@@ -82,6 +82,9 @@
                     link.innerHTML = response.url;
 
                 })
+                .fail(function (){
+                    window.location.href = "/site/error"
+                })
         })
     </script>
 

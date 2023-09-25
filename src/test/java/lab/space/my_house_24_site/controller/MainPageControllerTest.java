@@ -71,6 +71,6 @@ class MainPageControllerTest {
         when(mainPageService.findById()).thenThrow(new EntityNotFoundException());
         mockMvc.perform(get("/get-main-page"))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string("Main page not found"));
+                .andExpect(content().string(""));
     }
 }

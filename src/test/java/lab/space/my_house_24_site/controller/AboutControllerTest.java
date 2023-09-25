@@ -67,6 +67,6 @@ class AboutControllerTest {
         when(aboutService.findById()).thenThrow(new EntityNotFoundException());
         mockMvc.perform(get("/get-about"))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string("About not found"));
+                .andExpect(content().string(""));
     }
 }
