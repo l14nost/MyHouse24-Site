@@ -35,7 +35,7 @@ class ContactControllerTest {
     void contactPage() throws Exception {
         mockMvc.perform(get("/contacts"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/admin/pages/contact"));
+                .andExpect(view().name("admin/pages/contact"));
     }
 
     @Test

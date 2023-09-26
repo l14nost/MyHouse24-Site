@@ -78,6 +78,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>MyHouse24-Site</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

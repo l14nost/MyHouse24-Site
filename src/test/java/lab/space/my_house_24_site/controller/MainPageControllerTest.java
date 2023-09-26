@@ -39,7 +39,7 @@ class MainPageControllerTest {
     void mainPage() throws Exception {
         mockMvc.perform(get("/main"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/admin/pages/main"));
+                .andExpect(view().name("admin/pages/main"));
     }
 
     @Test

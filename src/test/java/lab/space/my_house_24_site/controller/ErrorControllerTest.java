@@ -24,6 +24,6 @@ class ErrorControllerTest {
     void handle404() throws Exception {
         mockMvc.perform(get("/error-404"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/admin/pages/error/404"));
+                .andExpect(view().name("admin/pages/error/404"));
     }
 }

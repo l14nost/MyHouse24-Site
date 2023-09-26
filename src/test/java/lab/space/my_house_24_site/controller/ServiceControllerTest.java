@@ -39,7 +39,7 @@ class ServiceControllerTest {
     void servicePage() throws Exception {
         mockMvc.perform(get("/service"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/admin/pages/service"));
+                .andExpect(view().name("admin/pages/service"));
     }
 
     @Test
