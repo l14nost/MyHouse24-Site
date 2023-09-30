@@ -61,7 +61,7 @@
 
         $(document).ready(function (){
             $.ajax({
-                url: "/site/get-contact"
+                url: "/myhouse24-amirb-nikitaf/site/get-contact"
             })
                 .done(function (response){
 
@@ -81,9 +81,10 @@
                     link.href = response.url;
                     link.innerHTML = response.url;
 
+
                 })
                 .fail(function (){
-                    window.location.href = "/site/error"
+                    window.location.href = "/myhouse24-amirb-nikitaf/site/error"
                 })
         })
     </script>

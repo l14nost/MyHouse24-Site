@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /site
+    context-path: /myhouse24-amirb-nikitaf/site
   port: 8081
 
 spring:

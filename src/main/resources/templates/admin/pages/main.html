@@ -14,7 +14,7 @@
     </th:block>
 </head>
 <th:block layout:fragment="content-full-screen">
-    <div id="carouselExampleIndicators" class="carousel slide" style="width: 100%; margin-bottom: 100px">
+    <div id="carouselExampleIndicators" class="carousel slide" style="width: 100%; margin-bottom: 100px; max-height: 500px">
         <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -22,13 +22,13 @@
     </div>
         <div class="carousel-inner">
         <div class="carousel-item active">
-            <img class="d-flex w-100" alt="..." id="slide1">
+            <img class="d-flex w-100 error-photo" alt="..." id="slide1" style="max-height: 500px">
         </div>
         <div class="carousel-item">
-            <img  class="d-flex w-100" alt="..." id="slide2">
+            <img  class="d-flex w-100 error-photo" alt="..." id="slide2" style="max-height: 500px">
         </div>
         <div class="carousel-item">
-            <img  class="d-flex w-100" alt="..." id="slide3">
+            <img  class="d-flex w-100 error-photo" alt="..." id="slide3" style="max-height: 500px">
         </div>
     </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -52,8 +52,8 @@
                 <a th:href="@{/about}" class="btn btn-primary">Детальніше</a>
             </div>
             <div>
-                    <a href="https://play.google.com/store/games?hl=ru&amp;gl=US"><img src="/site/assets/images/icons/googleplay.png" class="img-responsive imgStore" alt=""></a>
-                    <a href="https://www.apple.com/ua/app-store/"><img src="/site/assets/images/icons/appstore.png" class="img-responsive imgStore" alt=""></a>
+                    <a href="https://play.google.com/store/games?hl=ru&amp;gl=US"><img th:src="@{/assets/images/icons/googleplay.png}" class="img-responsive imgStore" alt=""></a>
+                    <a href="https://www.apple.com/ua/app-store/"><img th:src="@{/assets/images/icons/appstore.png}" class="img-responsive imgStore" alt=""></a>
             </div>
         </div>
     </div>
@@ -84,14 +84,14 @@
 
         $(document).ready(function (){
             $.ajax({
-                url: "/site/get-main-page"
+                url: "/myhouse24-amirb-nikitaf/site/get-main-page"
             })
                 .done(function (response){
                     $("#title").text(response.title);
                     $("#description").html(response.description);
-                    $("#slide1").attr("src","/site/files/"+response.slide1);
-                    $("#slide2").attr("src","/site/files/"+response.slide2);
-                    $("#slide3").attr("src","/site/files/"+response.slide3);
+                    $("#slide1").attr("src","/myhouse24-amirb-nikitaf/site/files/"+response.slide1);
+                    $("#slide2").attr("src","/myhouse24-amirb-nikitaf/site/files/"+response.slide2);
+                    $("#slide3").attr("src","/myhouse24-amirb-nikitaf/site/files/"+response.slide3);
                     const container = document.getElementById("bannerContainer");
                     const newTr = document.createElement("div");
                     newTr.classList.add("row")
@@ -100,7 +100,7 @@
                         bannerHtml+= "<div class=\"col-sm-4\">\n" +
                             "            <div class=\"col\">\n" +
                             "                <div class=\"card\">\n" +
-                            "                    <img class=\"main-page-slide\" src=\"/site/files/"+ response.bannerList[i].image +"\">\n" +
+                            "                    <img class=\"main-page-slide error-photo\" src=\"/myhouse24-amirb-nikitaf/site/files/"+ response.bannerList[i].image +"\" id='main"+i+"'>\n" +
                             "                    <div class=\"card-body\">\n" +
                             "                        <h5 class=\"card-title\">"+ response.bannerList[i].name +"</h5>\n" +
                             "                        <div class=\"card-text\">"+ response.bannerList[i].description +"</div>\n" +
@@ -114,14 +114,18 @@
                         const container = document.getElementById("link");
                         container.style.display = "none";
                     }
-
+                    $('.error-photo').bind('error', function() {
+                        var fieldID = $(this).attr('id');
+                        var photo = document.getElementById(fieldID);
+                        photo.src = "/myhouse24-amirb-nikitaf/site/static/assets/images/default.jpg";
+                    });
                 })
                 .fail(function (){
-                    window.location.href = "/site/error"
+                    window.location.href = "/myhouse24-amirb-nikitaf/site/error"
                 })
 
             $.ajax({
-                url: "/site/get-contact"
+                url: "/myhouse24-amirb-nikitaf/site/get-contact"
             })
                 .done(function (response){
                     $("#fullName").text(response.fullName);
@@ -135,7 +139,7 @@
                     email.href = "mailto:"+response.email;
                 })
                 .fail(function (){
-                    window.location.href = "/site/error"
+                    window.location.href = "/myhouse24-amirb-nikitaf/site/error"
                 })
         })
     </script>
