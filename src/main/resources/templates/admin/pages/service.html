@@ -57,7 +57,7 @@
         function getAllHouse(page) {
 
             $.ajax({
-                url: "/myhouse24-amirb-nikitaf/site/get-service",
+                url: "/myhouse24-amirb-nikitaf/get-service",
                 data: {
                     page: page
                 }
@@ -81,7 +81,7 @@
                                 newTr.style.marginTop = "20px";
                                 newTr.innerHTML =
                                     "            <div class=\"col-sm-7\">\n" +
-                                    "                <img class='error-photo' src=\"/myhouse24-amirb-nikitaf/site/files/"+entity.image+"\" style=\"width: 100%; height: 300px\" id='service"+index+"'>\n" +
+                                    "                <img class='error-photo' src=\"/myhouse24-amirb-nikitaf/files/"+entity.image+"\" style=\"width: 100%; height: 300px\" id='service"+index+"'>\n" +
                                     "            </div>\n" +
                                     "            <div class=\"col-sm-5\">\n" +
                                     "                <h4>"+entity.name+"</h4>\n" +
@@ -95,7 +95,7 @@
                             $('.error-photo').bind('error', function() {
                                 var fieldID = $(this).attr('id');
                                 var photo = document.getElementById(fieldID);
-                                photo.src = "/myhouse24-amirb-nikitaf/site/static/assets/images/default.jpg";
+                                photo.src = "/myhouse24-amirb-nikitaf/static/assets/images/default.jpg";
                             });
 
                             if (response.totalPages >= 2 && response.totalPages<7) {
@@ -175,7 +175,7 @@
                     }
                 )
                 .fail(function (){
-                    window.location.href = "/myhouse24-amirb-nikitaf/site/error"
+                    window.location.href = "/myhouse24-amirb-nikitaf/error"
                 })
         }
 

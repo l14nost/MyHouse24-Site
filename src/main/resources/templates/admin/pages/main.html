@@ -84,14 +84,14 @@
 
         $(document).ready(function (){
             $.ajax({
-                url: "/myhouse24-amirb-nikitaf/site/get-main-page"
+                url: "/myhouse24-amirb-nikitaf/get-main-page"
             })
                 .done(function (response){
                     $("#title").text(response.title);
                     $("#description").html(response.description);
-                    $("#slide1").attr("src","/myhouse24-amirb-nikitaf/site/files/"+response.slide1);
-                    $("#slide2").attr("src","/myhouse24-amirb-nikitaf/site/files/"+response.slide2);
-                    $("#slide3").attr("src","/myhouse24-amirb-nikitaf/site/files/"+response.slide3);
+                    $("#slide1").attr("src","/myhouse24-amirb-nikitaf/files/"+response.slide1);
+                    $("#slide2").attr("src","/myhouse24-amirb-nikitaf/files/"+response.slide2);
+                    $("#slide3").attr("src","/myhouse24-amirb-nikitaf/files/"+response.slide3);
                     const container = document.getElementById("bannerContainer");
                     const newTr = document.createElement("div");
                     newTr.classList.add("row")
@@ -100,7 +100,7 @@
                         bannerHtml+= "<div class=\"col-sm-4\">\n" +
                             "            <div class=\"col\">\n" +
                             "                <div class=\"card\">\n" +
-                            "                    <img class=\"main-page-slide error-photo\" src=\"/myhouse24-amirb-nikitaf/site/files/"+ response.bannerList[i].image +"\" id='main"+i+"'>\n" +
+                            "                    <img class=\"main-page-slide error-photo\" src=\"/myhouse24-amirb-nikitaf/files/"+ response.bannerList[i].image +"\" id='main"+i+"'>\n" +
                             "                    <div class=\"card-body\">\n" +
                             "                        <h5 class=\"card-title\">"+ response.bannerList[i].name +"</h5>\n" +
                             "                        <div class=\"card-text\">"+ response.bannerList[i].description +"</div>\n" +
@@ -117,15 +117,15 @@
                     $('.error-photo').bind('error', function() {
                         var fieldID = $(this).attr('id');
                         var photo = document.getElementById(fieldID);
-                        photo.src = "/myhouse24-amirb-nikitaf/site/static/assets/images/default.jpg";
+                        photo.src = "/myhouse24-amirb-nikitaf/static/assets/images/default.jpg";
                     });
                 })
                 .fail(function (){
-                    window.location.href = "/myhouse24-amirb-nikitaf/site/error"
+                    window.location.href = "/myhouse24-amirb-nikitaf/error"
                 })
 
             $.ajax({
-                url: "/myhouse24-amirb-nikitaf/site/get-contact"
+                url: "/myhouse24-amirb-nikitaf/get-contact"
             })
                 .done(function (response){
                     $("#fullName").text(response.fullName);
@@ -139,7 +139,7 @@
                     email.href = "mailto:"+response.email;
                 })
                 .fail(function (){
-                    window.location.href = "/myhouse24-amirb-nikitaf/site/error"
+                    window.location.href = "/myhouse24-amirb-nikitaf/error"
                 })
         })
     </script>
